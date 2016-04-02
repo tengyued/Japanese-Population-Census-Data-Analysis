@@ -6,7 +6,6 @@ from tests import *
 
 
 
-
 def test_excel_reader():
     test = excelReader()
     assert len(test) == 102    
