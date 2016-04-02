@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import urllib
 import os.path
 import csv
 import xlrd
@@ -9,26 +8,8 @@ import math
 import matplotlib.pyplot as plt 
 
 
-
-def download_file():
-	""" Download the file is used during the execution.
-	to the relative path
-	Read in the file given 'websites.csv' 	       """
-
-	web = open("websites.csv", 'rU')
-	reader = csv.DictReader(web)
-
-	for row in reader:
-		urllib.urlretrieve(row['url'], row['year'] + "_" + row['month'] + ".xls")
-
-	urllib.urlretrieve("https://www.quandl.com/api/v3/datasets/WORLDBANK/JPN_NY_GDP_MKTP_KN.csv", \
-		"gdp.csv")
-
-	web.close()
-
-
 #######################################################################
-# Part 1: Data Collection
+# Part 1: Data Collection and Calculation (YUE TENG)
 #######################################################################
 
 def excelReader():
@@ -36,9 +17,9 @@ def excelReader():
         It will run through all of the given xls that has been downloaded.
         
         Return a dictionary with the key as filename and value as 
-        the cell value needed for the project        
+        a dictionary contains the cell values needed for the project        
         
-        0 is the Okun's Law, 1 is labor force 
+        For index of values, 0 is the Okun's Law, 1 is labor force 
         of female, 2 is the overall labor force, and 3 is the labor force 
         participation rate of female in each month.                 """
             
@@ -120,17 +101,17 @@ def gdp_reader():
     
     
     
-def december_selector(month_unemploy):
+def december_selector(month_dict):
     """ Select the data from each December and store them into a dictionary.
-        Given: month dictionary
+        Given: dictionary with months and values
         Return: [year]: value on December                               """
     
     result = {}
-    for month in month_unemploy:
+    for month in month_dict:
         temp = month.split("_")
         
         if temp[1] == '12':
-            result[int(temp[0])] = month_unemploy[month]
+            result[int(temp[0])] = month_dict[month]
     return result
     
     
@@ -209,7 +190,7 @@ def social_accept(female_labor_lst, overall_labor_lst):
     
     
 #######################################################################
-# Part 2: Graph Drawing
+# Part 2: Graph Drawing (YUE TENG)
 #######################################################################
 
 def draw_okun(obs, exp, year):
@@ -239,7 +220,7 @@ def draw_female(rate, year, y_label, title):
 
 
 #######################################################################
-# Part 3: Paired t-Test
+# Part 3: Paired t-Test (XIAOXUAN LU)
 #######################################################################
 
 def set_up_the_hypothesis():
@@ -281,7 +262,7 @@ def stats_analysis(x_obs, x_exp):
         
         
 #######################################################################
-# Part 4: Calculation of correlation
+# Part 4: Calculation of correlation (XIAOXUAN LU)
 #######################################################################
 
 def correlation_coefficient(x,y):
@@ -302,11 +283,7 @@ def correlation_coefficient(x,y):
 #######################################################################
 
 def main():
-    # If you want to download the file automatically, uncommend the function call below
-    # Otherwise, you can also go to 
     #"https://drive.google.com/folderview?id=0By3iDWFQEQYpMXd4Z2JKT0h3U28&usp=sharing"
-    # to manually download the files
-    #download_file()
     
     
     
